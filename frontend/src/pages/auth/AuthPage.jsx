@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -13,10 +13,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signInFormControll, signUpFormControll } from "@/config/config";
 import CommonForm from "@/components/form-controller-common/CommonForm";
+import { AuthContext } from "@/context/auth-context/AuthContext";
 
 const AuthPage = () => {
-  const [signUpFormData, setSignUpFormData] = useState({});
-  const [signInFormData, setSignInFormData] = useState({});
+  const {
+    signUpFormData,
+    setSignUpFormData,
+    signInFormData,
+    setSignInFormData,
+  } = useContext(AuthContext);
 
   const handleSignUpSubmit = (e) => {
     e.preventDefault();
