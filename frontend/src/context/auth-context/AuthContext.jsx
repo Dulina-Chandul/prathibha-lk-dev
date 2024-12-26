@@ -75,6 +75,7 @@ export const AuthProvider = ({ children }) => {
         setSignInFormData,
         handleSignUpSubmit,
         handleSignInSubmit,
+        auth,
       }}
     >
       {children}
