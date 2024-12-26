@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { initialSignInFormData, initialSignUpFormData } from "@/config/config";
 import {
   checkAuthService,
@@ -15,6 +16,8 @@ export const AuthProvider = ({ children }) => {
     authenticated: false,
     user: null,
   });
+
+  const [loading, setLoading] = useState(true);
 
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
@@ -34,30 +37,52 @@ export const AuthProvider = ({ children }) => {
         authenticated: true,
         user: data.data.user,
       });
+      // setLoading(false);
     } else {
       setAuth({
         authenticated: false,
         user: null,
       });
+      // setLoading(false);
     }
   };
 
   // Check Auth User
 
   const checkAuthUser = async () => {
-    const data = await checkAuthService();
+    try {
+      const data = await checkAuthService();
 
-    if (data.success) {
-      setAuth({
-        authenticated: true,
-        user: data.data.user,
-      });
-    } else {
-      setAuth({
-        authenticated: false,
-        user: null,
-      });
+      if (data.success) {
+        setAuth({
+          authenticated: true,
+          user: data.data.user,
+        });
+        setLoading(false);
+      } else {
+        setAuth({
+          authenticated: false,
+          user: null,
+        });
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      if (!error?.response?.data?.success) {
+        setAuth({
+          authenticated: false,
+          user: null,
+        });
+        setLoading(false);
+      }
     }
+  };
+
+  const resetCredentials = () => {
+    setAuth({
+      authenticated: false,
+      user: null,
+    });
   };
 
   useEffect(() => {
@@ -76,9 +101,10 @@ export const AuthProvider = ({ children }) => {
         handleSignUpSubmit,
         handleSignInSubmit,
         auth,
+        resetCredentials,
       }}
     >
-      {children}
+      {loading ? <Skeleton /> : children}
     </AuthContext.Provider>
   );
 };
