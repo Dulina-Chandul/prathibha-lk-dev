@@ -1,5 +1,6 @@
 import User from "../../models/User.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const registerUser = async (req, res) => {
   const { firstName, lastName, userName, userEmail, password, role } = req.body;
@@ -21,6 +22,7 @@ const registerUser = async (req, res) => {
   const newUser = new User({
     firstName,
     lastName,
+    userEmail,
     userName,
     password: hashPassword,
     role,
@@ -35,4 +37,47 @@ const registerUser = async (req, res) => {
   });
 };
 
-export { registerUser };
+const loginUser = async (req, res) => {
+  const { userEmail, password } = req.body;
+
+  const checkUser = await User.findOne({ userEmail });
+  console.log(checkUser);
+
+  if (!checkUser || !(await bcrypt.compare(password, checkUser.password))) {
+    return res.status(401).json({
+      success: false,
+      from: "authController.js",
+      message: "Invalid Credentials",
+    });
+  }
+
+  const accessToken = jwt.sign(
+    {
+      _id: checkUser._id,
+      userName: checkUser.userName,
+      userEmail: checkUser.userEmail,
+      role: checkUser.role,
+    },
+    process.env.JWT_SECRET_KEY,
+    {
+      expiresIn: "120m",
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+    from: "authController.js",
+    message: "User logged in successfully",
+    data: {
+      accessToken,
+      user: {
+        _id: checkUser._id,
+        userName: checkUser.userName,
+        userEmail: checkUser.userEmail,
+        role: checkUser.role,
+      },
+    },
+  });
+};
+
+export { registerUser, loginUser };

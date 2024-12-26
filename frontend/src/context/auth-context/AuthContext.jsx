@@ -1,5 +1,5 @@
 import { initialSignInFormData, initialSignUpFormData } from "@/config/config";
-import { registerService } from "@/services/services";
+import { loginService, registerService } from "@/services/services";
 import { createContext, useState } from "react";
 
 export const AuthContext = createContext(null);
@@ -11,13 +11,11 @@ export const AuthProvider = ({ children }) => {
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
     const data = await registerService(signUpFormData);
-    console.log(data);
   };
 
-  const handleSignInSubmit = (e) => {
+  const handleSignInSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log(signInFormData);
+    const data = await loginService(signInFormData);
   };
 
   return (
