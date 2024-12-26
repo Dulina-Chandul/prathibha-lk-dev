@@ -28,6 +28,8 @@ mongoose
     console.log("Error connecting to MongoDB", err);
   });
 
+//   Routes Configuration
+
 //   Global Error Handler
 app.use((err, req, res, next) => {
   console.log("From Global Error Handler, Error: ", err.stack);
