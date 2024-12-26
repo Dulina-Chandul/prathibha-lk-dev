@@ -2,6 +2,7 @@ import env from "dotenv";
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
+import authRoutes from "./routes/auth-routes/authRoutes.js";
 
 env.config();
 
@@ -29,6 +30,7 @@ mongoose
   });
 
 //   Routes Configuration
+app.use("/auth", authRoutes);
 
 //   Global Error Handler
 app.use((err, req, res, next) => {

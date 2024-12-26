@@ -21,19 +21,9 @@ const AuthPage = () => {
     setSignUpFormData,
     signInFormData,
     setSignInFormData,
+    handleSignUpSubmit,
+    handleSignInSubmit,
   } = useContext(AuthContext);
-
-  const handleSignUpSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log(signUpFormData);
-  };
-
-  const handleSignInSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log(signInFormData);
-  };
 
   return (
     <div className="flex flex-col min-h-screen">
