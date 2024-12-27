@@ -60,6 +60,13 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const resetCredentials = () => {
+    setAuth({
+      authenticated: false,
+      user: null,
+    });
+  };
+
   useEffect(() => {
     checkAuthUser();
   }, []);
@@ -76,6 +83,7 @@ export const AuthProvider = ({ children }) => {
         handleSignUpSubmit,
         handleSignInSubmit,
         auth,
+        resetCredentials,
       }}
     >
       {children}
