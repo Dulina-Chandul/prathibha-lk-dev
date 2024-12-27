@@ -1,20 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { AuthContext } from "@/context/auth-context/AuthContext";
-import React, { useContext } from "react";
+import React from "react";
 
 const Home = () => {
-  const { resetCredentials } = useContext(AuthContext);
-
-  const handleLogout = () => {
-    resetCredentials();
-    sessionStorage.clear();
-  };
-
-  return (
-    <div>
-      <Button onClick={handleLogout}>Logout</Button>
-    </div>
-  );
+  return <div>Studnet Home</div>;
 };
 
 export default Home;
