@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth-routes/authRoutes.js";
+import wordRoutes from "./routes/word-routes/wordRoutes.js";
 
 env.config();
 
@@ -31,6 +32,7 @@ mongoose
 
 //   Routes Configuration
 app.use("/auth", authRoutes);
+app.use("/wordExplorer", wordRoutes);
 
 //   Global Error Handler
 app.use((err, req, res, next) => {
