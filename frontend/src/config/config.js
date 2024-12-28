@@ -135,3 +135,17 @@ export const initialSignUpFormData = {
   password: "",
   confirmPassword: "",
 };
+
+// Instructor
+// Initial Course Data
+export const initialCourseData = [
+  {
+    id: undefined,
+    title: undefined,
+    description: undefined,
+    image: undefined,
+    videoCount: 0,
+    videos: [],
+    courseStatus: undefined,
+  },
+];
