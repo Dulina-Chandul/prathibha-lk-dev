@@ -5,6 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
+import { addCourse } from "@/services/services";
 
 const AddNewCoursePage = () => {
   const [curriculum, setCurriculum] = useState([]);
@@ -17,6 +18,7 @@ const AddNewCoursePage = () => {
     visibility: "public",
     access: "free",
   });
+
   const [activeTab, setActiveTab] = useState("curriculum"); // Track the active tab
 
   // Handle Curriculum
@@ -72,20 +74,30 @@ const AddNewCoursePage = () => {
   };
 
   // Handle Form Submission
-  const handleSubmit = () => {
+  // AddNewCoursePage.js
+
+  const handleSubmit = async () => {
     const courseData = {
       curriculum,
       courseLanding,
       settings,
     };
-    console.log("Course Data:", courseData);
-    // Call your API to save the course data
+
+    try {
+      const response = await addCourse(courseData);
+      console.log("Course created successfully:", response.data);
+    } catch (error) {
+      console.error(
+        "Failed to create course:",
+        error.response?.data || error.message
+      );
+    }
   };
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Add New Course</h1>
-      <Tabs defaultValue="curriculum" className="w-full">
+      <Tabs defaultValue={activeTab} className="w-full">
         <TabsList>
           <TabsTrigger value="curriculum">Curriculum</TabsTrigger>
           <TabsTrigger value="landing">Course Landing Page</TabsTrigger>
@@ -190,13 +202,13 @@ const AddNewCoursePage = () => {
                   </Button>
                 </TabsList>
 
-                {curriculum.map((video, index) => (
+                {curriculum.map((course, index) => (
                   <TabsContent key={index} value={`lesson-${index + 1}`}>
                     <div className="space-y-4 mt-4">
                       <Input
                         type="text"
                         placeholder="YouTube Video Link"
-                        value={video.videoLink}
+                        value={course.videoLink}
                         onChange={(e) =>
                           handleVideoChange(index, "videoLink", e.target.value)
                         }
@@ -204,14 +216,14 @@ const AddNewCoursePage = () => {
                       <Input
                         type="text"
                         placeholder="Title"
-                        value={video.title}
+                        value={course.title}
                         onChange={(e) =>
                           handleVideoChange(index, "title", e.target.value)
                         }
                       />
                       <Textarea
                         placeholder="Description"
-                        value={video.description}
+                        value={course.description}
                         onChange={(e) =>
                           handleVideoChange(
                             index,

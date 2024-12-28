@@ -55,21 +55,11 @@ export const deleteWordService = async (id) => {
 
 // Instructor Services
 // Fetch courses created by the instructor
-export const fetchCourses = async () => {
-  try {
-    const response = await axiosInstance.get("/instructor/courses");
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching courses:", error);
-    throw error;
-  }
-};
-
 // Add a new course
 export const addCourse = async (courseData) => {
   try {
     const response = await axiosInstance.post(
-      "/instructor/courses",
+      "/courses/create-new",
       courseData
     );
     return response.data;
@@ -79,13 +69,21 @@ export const addCourse = async (courseData) => {
   }
 };
 
+// Get all courses
+export const fetchCourses = async () => {
+  try {
+    const response = await axiosInstance.get("/courses/all");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all courses:", error);
+    throw error;
+  }
+};
+
 // Update a course
 export const updateCourse = async (id, updatedData) => {
   try {
-    const response = await axiosInstance.put(
-      `/instructor/courses/${id}`,
-      updatedData
-    );
+    const response = await axiosInstance.put(`/courses/${id}`, updatedData);
     return response.data;
   } catch (error) {
     console.error("Error updating course:", error);
@@ -96,7 +94,8 @@ export const updateCourse = async (id, updatedData) => {
 // Delete a course
 export const deleteCourse = async (id) => {
   try {
-    await axiosInstance.delete(`/instructor/courses/${id}`);
+    const response = await axiosInstance.delete(`/courses/${id}`);
+    return response.data;
   } catch (error) {
     console.error("Error deleting course:", error);
     throw error;

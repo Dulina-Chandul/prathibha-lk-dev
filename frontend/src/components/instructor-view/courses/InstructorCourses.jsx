@@ -1,3 +1,5 @@
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,18 +10,51 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { fetchCourses, deleteCourse } from "@/services/services";
 import { InstructorContext } from "@/context/instructor-context/InstructorContext";
 
 const InstructorCourses = () => {
-  const { courses, loading, deleteCourse } = useContext(InstructorContext);
+  const { courses, setCourses } = useContext(InstructorContext);
+  const [loading, setLoading] = useState(true);
 
-  if (loading) {
-    return <p>Loading...</p>;
+  // Fetch courses on component mount
+  useEffect(() => {
+    const fetchCoursesData = async () => {
+      try {
+        const response = await fetchCourses();
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching all courses:", error);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    console.log("Fetching courses...");
+
+    fetchCoursesData();
+  }, [setCourses]);
+
+  // Handle course deletion
+  const handleDeleteCourse = async (id) => {
+    try {
+      await deleteCourse(id);
+      setCourses((prevCourses) =>
+        prevCourses.filter((course) => course._id !== id)
+      );
+    } catch (error) {
+      console.error(
+        "Failed to delete course:",
+        error.response?.data || error.message
+      );
+    }
+  };
+
+  if (courses.length === 0) {
+    return <p>No courses found.</p>;
   }
 
-  console.log(courses.map((course) => course.id));
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
@@ -47,33 +82,34 @@ const InstructorCourses = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {courses.map((course) => {
-                if (
-                  course.id !== null &&
-                  course.id !== undefined &&
-                  course.id !== ""
-                ) {
-                  return (
-                    <TableRow key={course.id}>
-                      <TableCell>{course.title}</TableCell>
-                      <TableCell>{course.description}</TableCell>
-                      <TableCell>{course.videoCount}</TableCell>
-                      <TableCell>{course.courseStatus}</TableCell>
-                      <TableCell>
-                        <Button variant="outline" className="mr-2">
-                          Edit
-                        </Button>
-                        <Button
-                          variant="destructive"
-                          onClick={() => deleteCourse(course.id)}
-                        >
-                          Delete
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                }
-              })}
+              {courses.isArray &&
+                courses.map((course) => {
+                  if (
+                    courses.id !== null &&
+                    courses.id !== undefined &&
+                    courses.id !== ""
+                  ) {
+                    return (
+                      <TableRow key={course._id}>
+                        <TableCell>{course.title}</TableCell>
+                        <TableCell>{course.description}</TableCell>
+                        {/* <TableCell>{course.curriculum.length}</TableCell> */}
+                        <TableCell>{course.visibility}</TableCell>
+                        <TableCell>
+                          <Button variant="outline" className="mr-2">
+                            Edit
+                          </Button>
+                          <Button
+                            variant="destructive"
+                            onClick={() => handleDeleteCourse(course._id)}
+                          >
+                            Delete
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  }
+                })}
             </TableBody>
           </Table>
         </CardContent>
