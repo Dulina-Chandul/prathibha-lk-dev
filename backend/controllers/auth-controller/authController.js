@@ -80,4 +80,17 @@ const loginUser = async (req, res) => {
   });
 };
 
-export { registerUser, loginUser };
+const userCount = async (req, res) => {
+  const userCount = await User.countDocuments({ role: "user" });
+
+  res.status(200).json({
+    success: true,
+    from: "authController.js",
+    message: "User count fetched successfully",
+    data: {
+      userCount,
+    },
+  });
+};
+
+export { registerUser, loginUser, userCount };

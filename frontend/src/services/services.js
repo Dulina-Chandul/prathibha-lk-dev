@@ -2,6 +2,14 @@ import axiosInstance from "@/api/axiosInstance";
 
 // User Register, Login and Authentication
 // Register Service
+
+export const countUsers = async () => {
+  const { data } = await axiosInstance.get("/auth/userCount");
+
+  console.log("User count:", data.data.userCount);
+  return data.data.userCount;
+};
+
 export const registerService = async (formData) => {
   const data = await axiosInstance.post("/auth/register", {
     ...formData,

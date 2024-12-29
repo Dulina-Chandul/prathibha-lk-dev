@@ -2,11 +2,13 @@ import express from "express";
 import {
   registerUser,
   loginUser,
+  userCount,
 } from "../../controllers/auth-controller/authController.js";
 import authenticate from "../../middleware/authMiddleware.js";
 
 const router = express.Router();
 
+router.get("/userCount", userCount);
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/check-auth", authenticate, (req, res) => {

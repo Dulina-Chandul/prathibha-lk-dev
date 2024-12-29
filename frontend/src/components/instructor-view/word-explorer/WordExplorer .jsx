@@ -23,6 +23,7 @@ import {
   updateWordService,
   deleteWordService,
 } from "@/services/services";
+import { InstructorContext } from "@/context/instructor-context/InstructorContext";
 
 const WordExplorer = () => {
   const [words, setWords] = useState([]);

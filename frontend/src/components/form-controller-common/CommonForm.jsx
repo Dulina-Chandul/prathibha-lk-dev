@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "../ui/button";
 import FormControls from "./FormControls";
 import Confetti from "react-confetti";
 import toast, { Toaster } from "react-hot-toast";
+import { AuthContext } from "@/context/auth-context/AuthContext";
 
 const CommonForm = ({
   handleSubmit,
@@ -14,6 +15,8 @@ const CommonForm = ({
 }) => {
   const [signUpButtonClicked, setSignUpButtonClick] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+
+  // const { auth } = useContext(AuthContext);
 
   useEffect(() => {
     if (showConfetti) {
@@ -36,6 +39,18 @@ const CommonForm = ({
     return true; // Allow form submission
   };
 
+  // const checkLoginAuth = () => {
+  //   if (auth.user !== null) {
+  //     toast.success("Login successful!", {
+  //       position: "top-right",
+  //     });
+  //   } else {
+  //     toast.error("Login failed. Please try again.", {
+  //       position: "top-right",
+  //     });
+  //   }
+  // };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
@@ -43,13 +58,19 @@ const CommonForm = ({
       if (!checkPassword()) {
         return; // Stop if passwords don't match
       }
+
+      toast.success("Registration successful!", {
+        position: "top-right",
+      });
       setShowConfetti(true); // Show Confetti
     }
 
+    if (buttonText === "Sign In") {
+      // checkLoginAuth();
+    }
+
+    setFormData({}); // Reset form data
     handleSubmit(e); // Call the provided handleSubmit function
-    toast.success("Registration successful!", {
-      position: "top-right",
-    });
   };
 
   return (

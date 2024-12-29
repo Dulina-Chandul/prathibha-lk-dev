@@ -1,35 +1,40 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Book, Users, Activity, Book as BookIcon } from "lucide-react";
-
-const statsData = [
-  {
-    title: "Total Students",
-    value: "2,350",
-    icon: Users,
-    description: "Active learners",
-  },
-  {
-    title: "Total Courses",
-    value: "45",
-    icon: Book,
-    description: "Published courses",
-  },
-  {
-    title: "Daily Active Users",
-    value: "890",
-    icon: Activity,
-    description: "Last 24 hours",
-  },
-  {
-    title: "Word Mastery",
-    value: "15",
-    icon: BookIcon,
-    description: "Words per day",
-  },
-];
+import { InstructorContext } from "@/context/instructor-context/InstructorContext";
 
 const InstructorDashboard = () => {
+  const { dashboardData } = useContext(InstructorContext);
+  console.log(dashboardData);
+
+  const statsData = [
+    {
+      title: "Total Students",
+      value: dashboardData.totalStudents,
+      icon: Users,
+      description: "Active learners",
+    },
+    {
+      title: "Total Courses",
+      value: dashboardData.totalCourses,
+      icon: Book,
+      description: "Published courses",
+    },
+    {
+      title: "Daily Active Users",
+      value: dashboardData.dailyActiveUsers,
+      icon: Activity,
+      description: "Last 24 hours",
+    },
+    {
+      title: "Word Mastery",
+      value: dashboardData.totalWords,
+      icon: BookIcon,
+      description: "Words per day",
+    },
+  ];
+
+  console.log(statsData);
   return (
     <div className="space-y-6">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
