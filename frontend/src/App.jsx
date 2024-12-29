@@ -7,6 +7,8 @@ import StudentViewCommonLayout from "./components/student-view/CommonLayout";
 import InstructorDashboardPage from "./pages/instructor/dashboard/InstructorDashboardPage";
 import StudentHome from "./pages/student/home/StudentHome";
 import AddNewCoursePage from "./pages/instructor/add-course/AddNewCoursePage";
+import CoursesTab from "./components/student-view/CourseTab";
+import CourseDetailsPage from "./pages/student/course-details/CourseDetailsPage";
 
 function App() {
   const { auth } = useContext(AuthContext);
@@ -56,8 +58,10 @@ function App() {
             />
           }
         >
+          <Route path="/" element={<CoursesTab />} />
+          <Route path="/courses/:id" element={<CourseDetailsPage />} />
           <Route path="home" element={<StudentHome />} />
-          <Route path="/" element={<StudentHome />} />
+          {/* <Route path="/" element={<StudentHome />} /> */}
         </Route>
       </Routes>
     </div>

@@ -134,4 +134,23 @@ const deleteCourse = async (req, res) => {
   }
 };
 
+export const getCourseById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const course = await Course.findById(id);
+    if (!course) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Course not found" });
+    }
+    res.status(200).json({ success: true, data: course });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch course",
+      error: error.message,
+    });
+  }
+};
+
 export { createCourse, getAllCourses, updateCourse, deleteCourse };

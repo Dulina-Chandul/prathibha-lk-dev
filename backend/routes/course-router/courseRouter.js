@@ -4,6 +4,7 @@ import {
   getAllCourses,
   updateCourse,
   deleteCourse,
+  getCourseById,
 } from "../../controllers/course-controller/course-controller.js";
 import authenticate from "../../middleware/authMiddleware.js";
 
@@ -20,5 +21,7 @@ router.put("/:id", authenticate, updateCourse);
 
 // Delete a course
 router.delete("/:id", authenticate, deleteCourse);
+
+router.get("/:id", authenticate, getCourseById);
 
 export default router;
