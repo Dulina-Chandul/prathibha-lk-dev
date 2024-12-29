@@ -140,12 +140,19 @@ export const initialSignUpFormData = {
 // Initial Course Data
 export const initialCourseData = [
   {
-    id: undefined,
-    title: undefined,
-    description: undefined,
-    image: undefined,
-    videoCount: 0,
-    videos: [],
-    courseStatus: undefined,
+    courseLanding: {
+      image: undefined,
+      title: undefined,
+      description: undefined,
+    },
+    createdAt: "Created Data goes here",
+    curriculum: [],
+    instructorId: undefined,
+    settings: {
+      access: "free",
+      visibility: "public",
+    },
+    updateAt: "Updated Data goes here",
+    _id: undefined,
   },
 ];

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 // Create a new course
 const createCourse = async (req, res) => {
-  const { curriculum, courseLanding, settings } = req.body;
+  const { curriculum, courseLanding, settings, numberOfVideos } = req.body;
   const instructor = req.user._id; // Get the instructor ID from the authenticated user
 
   // Validate input
@@ -20,6 +20,7 @@ const createCourse = async (req, res) => {
       courseLanding,
       settings,
       instructor,
+      numberOfVideos,
     });
 
     await newCourse.save();

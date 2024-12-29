@@ -18,7 +18,8 @@ export const InstructorProvider = ({ children }) => {
     try {
       const data = await fetchCourses();
       console.log("This log is from InstructorProvider loadCourses : ", data);
-      setCourses(data);
+      setCourses(data.data);
+      console.log("this is data.data", data.data);
     } catch (error) {
       console.error("Error fetching courses:", error);
     } finally {

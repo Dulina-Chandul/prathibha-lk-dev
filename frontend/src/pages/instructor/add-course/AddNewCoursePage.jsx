@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addCourse } from "@/services/services";
 
 const AddNewCoursePage = () => {
@@ -19,45 +19,46 @@ const AddNewCoursePage = () => {
     access: "free",
   });
 
-  const [activeTab, setActiveTab] = useState("curriculum"); // Track the active tab
+  const [numberOfVideos, setNumberOfVideos] = useState(0);
+
+  const [activeTab, setActiveTab] = useState("curriculum");
 
   // Handle Curriculum
   const handleAddVideo = () => {
-    const newLessonNumber = curriculum.length + 1; // Calculate the new lesson number
-    setActiveTab(`lesson-${newLessonNumber}`); // Switch to the new tab
+    const newLessonNumber = curriculum.length + 1;
+    setNumberOfVideos((prev) => prev + 1);
+    setActiveTab(`lesson-${newLessonNumber}`);
     setCurriculum([
       ...curriculum,
-      { videoLink: "", title: "", description: "" }, // Add a new lesson
+      { videoLink: "", title: "", description: "" },
     ]);
   };
 
-  const handleRemoveLesson = () => {
-    if (curriculum.length === 0) return; // If no lessons, do nothing
+  console.log(numberOfVideos);
 
-    // Get the index of the active lesson
+  const handleRemoveLesson = () => {
+    if (curriculum.length === 0) return;
+
     const activeLessonIndex = parseInt(activeTab.split("-")[1]) - 1;
 
-    // Remove the active lesson from the curriculum
     const updatedCurriculum = curriculum.filter(
       (_, index) => index !== activeLessonIndex
     );
 
-    // Reindex the remaining lessons
     const reindexedCurriculum = updatedCurriculum.map((lesson, index) => ({
       ...lesson,
-      // Optionally, you can update the title or other fields if needed
     }));
 
-    // Update the curriculum state
+    setNumberOfVideos((prev) => prev + 1);
+
     setCurriculum(reindexedCurriculum);
 
-    // Update the active tab to the previous lesson or the first lesson if the first lesson was deleted
     const newActiveTab =
       activeLessonIndex > 0
         ? `lesson-${activeLessonIndex}`
         : reindexedCurriculum.length > 0
         ? "lesson-1"
-        : "curriculum"; // Fallback to the curriculum tab if no lessons are left
+        : "curriculum";
 
     setActiveTab(newActiveTab);
   };
@@ -68,19 +69,16 @@ const AddNewCoursePage = () => {
     setCurriculum(updatedCurriculum);
   };
 
-  // Handle Settings
   const handleSettingsChange = (field, value) => {
     setSettings({ ...settings, [field]: value });
   };
-
-  // Handle Form Submission
-  // AddNewCoursePage.js
 
   const handleSubmit = async () => {
     const courseData = {
       curriculum,
       courseLanding,
       settings,
+      numberOfVideos,
     };
 
     try {
@@ -114,6 +112,7 @@ const AddNewCoursePage = () => {
               <div className="space-y-4">
                 <Label>Course Image</Label>
                 <Input
+                  placeholder="Enter Image URL"
                   type="text"
                   onChange={(e) =>
                     setCourseLanding({
@@ -157,23 +156,28 @@ const AddNewCoursePage = () => {
             <CardContent>
               <div className="space-y-4">
                 <Label>Visibility</Label>
-                <Input
-                  type="text"
-                  placeholder="Public/Private"
+                <select
                   value={settings.visibility}
                   onChange={(e) =>
                     handleSettingsChange("visibility", e.target.value)
                   }
-                />
+                  className="border border-gray-300 rounded-md p-2 w-full"
+                >
+                  <option value="public">Public</option>
+                  <option value="private">Private</option>
+                </select>
+
                 <Label>Access</Label>
-                <Input
-                  type="text"
-                  placeholder="Free/Paid"
+                <select
                   value={settings.access}
                   onChange={(e) =>
                     handleSettingsChange("access", e.target.value)
                   }
-                />
+                  className="border border-gray-300 rounded-md p-2 w-full"
+                >
+                  <option value="free">Free</option>
+                  <option value="paid">Paid</option>
+                </select>
               </div>
             </CardContent>
           </Card>
@@ -197,7 +201,10 @@ const AddNewCoursePage = () => {
                       Lesson {index + 1}
                     </TabsTrigger>
                   ))}
-                  <Button onClick={handleAddVideo} className="ml-2">
+                  <Button
+                    onClick={handleAddVideo}
+                    className="ml-2 bg-[#FF4A61] text-white hover:bg-[#e24355] transition-all duration-300"
+                  >
                     Add Lesson
                   </Button>
                 </TabsList>
@@ -233,7 +240,10 @@ const AddNewCoursePage = () => {
                         }
                       />
 
-                      <Button onClick={handleRemoveLesson}>
+                      <Button
+                        onClick={handleRemoveLesson}
+                        className="bg-[#FF4A61] text-white hover:bg-[#e24355] transition-all duration-300"
+                      >
                         Remove this Lesson
                       </Button>
                     </div>
@@ -247,7 +257,12 @@ const AddNewCoursePage = () => {
 
       {/* Submit Button */}
       <div className="mt-6">
-        <Button onClick={handleSubmit}>Save Course</Button>
+        <Button
+          onClick={handleSubmit}
+          className="bg-[#FF4A61] text-white hover:bg-[#e24355] transition-all duration-300"
+        >
+          Save Course
+        </Button>
       </div>
     </div>
   );

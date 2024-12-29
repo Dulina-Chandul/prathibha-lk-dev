@@ -30,6 +30,7 @@ const courseSchema = new mongoose.Schema(
       ref: "User", // Reference to the User model
       required: true,
     },
+    numberOfVideos: { type: Number, default: 0 },
   },
   { timestamps: true } // Automatically add createdAt and updatedAt fields
 );

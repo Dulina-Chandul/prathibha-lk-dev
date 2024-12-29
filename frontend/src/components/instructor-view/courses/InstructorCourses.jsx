@@ -17,11 +17,16 @@ const InstructorCourses = () => {
   const { courses, setCourses } = useContext(InstructorContext);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    console.log(courses);
+  }, []);
+
   // Fetch courses on component mount
   useEffect(() => {
     const fetchCoursesData = async () => {
       try {
         const response = await fetchCourses();
+        console.log("This is response", response.data);
         return response.data;
       } catch (error) {
         console.error("Error fetching all courses:", error);
@@ -35,6 +40,8 @@ const InstructorCourses = () => {
 
     fetchCoursesData();
   }, [setCourses]);
+
+  console.log(courses);
 
   // Handle course deletion
   const handleDeleteCourse = async (id) => {
@@ -52,7 +59,21 @@ const InstructorCourses = () => {
   };
 
   if (courses.length === 0) {
-    return <p>No courses found.</p>;
+    return (
+      <div className="w-full h-screen ">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Your Courses</h1>
+          <Link to="/instructor/create-new">
+            <Button className="bg-gradient-to-r from-[#3168ba] to-[#73c3e8] hover:from-[#FF4A61] hover:to-[#FF4A61]">
+              Add New Course
+            </Button>
+          </Link>
+        </div>
+        <p className="text-2xl font-semibold pt-20 flex justify-center">
+          No courses found.
+        </p>
+      </div>
+    );
   }
 
   return (
@@ -82,34 +103,36 @@ const InstructorCourses = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {courses.isArray &&
-                courses.map((course) => {
-                  if (
-                    courses.id !== null &&
-                    courses.id !== undefined &&
-                    courses.id !== ""
-                  ) {
-                    return (
-                      <TableRow key={course._id}>
-                        <TableCell>{course.title}</TableCell>
-                        <TableCell>{course.description}</TableCell>
-                        {/* <TableCell>{course.curriculum.length}</TableCell> */}
-                        <TableCell>{course.visibility}</TableCell>
-                        <TableCell>
-                          <Button variant="outline" className="mr-2">
-                            Edit
-                          </Button>
-                          <Button
-                            variant="destructive"
-                            onClick={() => handleDeleteCourse(course._id)}
-                          >
-                            Delete
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                })}
+              {courses.map((courseDetails) => {
+                console.log("This is courseDetails", courseDetails);
+                if (
+                  courseDetails._id !== null &&
+                  courseDetails._id !== undefined &&
+                  courseDetails._id !== ""
+                ) {
+                  return (
+                    <TableRow key={courseDetails._id}>
+                      <TableCell>{courseDetails.courseLanding.title}</TableCell>
+                      <TableCell>
+                        {courseDetails.courseLanding.description}
+                      </TableCell>
+                      <TableCell>{courseDetails.numberOfVideos}</TableCell>
+                      <TableCell>{courseDetails.settings.visibility}</TableCell>
+                      <TableCell>
+                        <Button variant="outline" className="mr-2">
+                          Edit
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          onClick={() => handleDeleteCourse(courseDetails._id)}
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                }
+              })}
             </TableBody>
           </Table>
         </CardContent>
