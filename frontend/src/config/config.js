@@ -67,7 +67,7 @@ export const signUpFormControll = [
         },
       },
       {
-        name: "confirm-password",
+        name: "confirmPassword",
         label: "Confirm Password",
         type: "password",
         placeholder: "Confirm your password",

@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
     const data = await registerService(signUpFormData);
+    console.log(data);
   };
 
   const handleSignInSubmit = async (e) => {

@@ -52,15 +52,15 @@ function App() {
           path="/"
           element={
             <RouteGuard
-              element={<StudentViewCommonLayout />}
+              element={<StudentHome />}
               authenticated={auth.authenticated}
               user={auth.user}
             />
           }
         >
-          <Route path="/" element={<CoursesTab />} />
+          {/* <Route path="/" element={<CoursesTab />} /> */}
           <Route path="/courses/:id" element={<CourseDetailsPage />} />
-          <Route path="home" element={<StudentHome />} />
+          <Route path="/home" element={<StudentHome />} />
           {/* <Route path="/" element={<StudentHome />} /> */}
         </Route>
       </Routes>

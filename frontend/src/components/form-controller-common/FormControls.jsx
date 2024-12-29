@@ -28,6 +28,7 @@ const FormControls = ({ formControlls = [], formData, setFormData }) => {
 
     const commonProps = {
       id: field.name,
+      type: field.type,
       name: field.name,
       placeholder: field.placeholder,
       required: field.required,

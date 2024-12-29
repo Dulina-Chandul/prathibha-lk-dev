@@ -4,6 +4,7 @@ import CoursesTab from "./CourseTab";
 import WordsTab from "./WordTab";
 import DailyJournalTab from "./DailyJournalTab";
 import { Outlet, useLocation } from "react-router-dom";
+import Header from "./Header";
 
 const StudentCommonLayout = () => {
   const location = useLocation();
