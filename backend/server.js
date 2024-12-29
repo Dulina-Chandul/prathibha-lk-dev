@@ -5,6 +5,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth-routes/authRoutes.js";
 import courseRoutes from "./routes/course-router/courseRouter.js";
+import wordRoutes from "./routes/word-routes/wordRoutes.js";
 
 env.config();
 
@@ -34,6 +35,7 @@ mongoose
 
 // Routes
 app.use("/auth", authRoutes);
+app.use("/wordExplorer", wordRoutes);
 app.use("/courses", courseRoutes);
 
 // Global error handler

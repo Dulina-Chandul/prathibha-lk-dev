@@ -28,7 +28,10 @@ export async function checkAuthService() {
 // Word Explorer Services
 // Add a new word
 export const addWordService = async (wordData) => {
-  const response = await axiosInstance.post("/wordExplorer/words", wordData);
+  const response = await axiosInstance.post(
+    "/wordExplorer/words/new",
+    wordData
+  );
   return response.data;
 };
 

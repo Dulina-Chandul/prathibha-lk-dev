@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 // CRUD Routes
-router.post("/words", addWord); // Add a new word
+router.post("/words/new", addWord); // Add a new word
 router.get("/words", getWords); // Get all words
 router.put("/words/:id", updateWord); // Update a word
 router.delete("/words/:id", deleteWord); // Delete a word
