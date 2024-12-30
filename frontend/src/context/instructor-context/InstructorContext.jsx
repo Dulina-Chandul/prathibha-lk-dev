@@ -28,10 +28,9 @@ export const InstructorProvider = ({ children }) => {
       console.log("This log is from InstructorProvider loadCourses : ", data);
       setCourses(data.data);
 
-      // Use the functional form of setDashboardData
       setDashboardData((prevData) => ({
-        ...prevData, // Use the previous state
-        totalCourses: data.data.length, // Update totalCourses
+        ...prevData,
+        totalCourses: data.data.length,
       }));
     } catch (error) {
       console.error("Error fetching courses:", error);

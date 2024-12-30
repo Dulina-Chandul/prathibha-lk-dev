@@ -36,7 +36,7 @@ const RandomWordPage = () => {
       {randomWord ? (
         <div className="min-h-[10rem]   bg-white text-primary-foreground p-14 rounded-xl shadow-lg w-4/5 sm:w-1/2 text-center">
           <h2 className="text-3xl font-semibold mb-2 ">
-            <span className="font-bold text-5xl text-[#FF4A61]">Word</span> :{" "}
+            <span className="font-bold text-5xl text-[#FF4A61]">Word :</span> :{" "}
             <span className="text-5xl font-bold text-[#FF4A61]">
               {randomWord.word}
             </span>
