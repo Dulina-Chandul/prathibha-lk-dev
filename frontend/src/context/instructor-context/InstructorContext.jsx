@@ -21,21 +21,21 @@ export const InstructorProvider = ({ children }) => {
     totalWords: 0,
   });
 
-  // Fetch courses created by the instructor
+  // Fetch courses
   const loadCourses = async () => {
     try {
+      // Get all courses fromDatabase
       const data = await fetchCourses();
       console.log("This log is from InstructorProvider loadCourses : ", data);
       setCourses(data.data);
 
+      // Set course count
       setDashboardData((prevData) => ({
         ...prevData,
         totalCourses: data.data.length,
       }));
     } catch (error) {
       console.error("Error fetching courses:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -83,6 +83,7 @@ export const InstructorProvider = ({ children }) => {
     }
   };
 
+  // Get number of Students
   const getUserCount = async () => {
     try {
       const userCount = await countUsers();
@@ -95,8 +96,10 @@ export const InstructorProvider = ({ children }) => {
     }
   };
 
+  // Get word Count
   const getWordCount = async () => {
     try {
+      // Get all the words in datbase
       const data = await getWordsService();
       if (Array.isArray(data)) {
         // console.log("Word count:", data.length);

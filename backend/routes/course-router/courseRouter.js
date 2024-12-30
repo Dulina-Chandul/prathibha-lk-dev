@@ -22,6 +22,7 @@ router.put("/:id", authenticate, updateCourse);
 // Delete a course
 router.delete("/:id", authenticate, deleteCourse);
 
+// Get Course by ID
 router.get("/:id", authenticate, getCourseById);
 
 export default router;

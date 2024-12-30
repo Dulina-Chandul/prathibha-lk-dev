@@ -23,7 +23,6 @@ import {
   updateWordService,
   deleteWordService,
 } from "@/services/services";
-import { InstructorContext } from "@/context/instructor-context/InstructorContext";
 
 const WordExplorer = () => {
   const [words, setWords] = useState([]);
@@ -31,7 +30,7 @@ const WordExplorer = () => {
   const [translation, setTranslation] = useState("");
   const [examples, setExamples] = useState("");
 
-  // Fetch words from the server
+  // Get all the words from DB
   useEffect(() => {
     fetchWords();
   }, []);
@@ -43,11 +42,11 @@ const WordExplorer = () => {
         setWords(data);
       } else {
         console.error("Expected an array but got:", data);
-        setWords([]); // Fallback to an empty array
+        setWords([]);
       }
     } catch (error) {
       console.error("Error fetching words:", error);
-      setWords([]); // Fallback to an empty array
+      setWords([]);
     }
   };
 
@@ -170,7 +169,7 @@ const WordExplorer = () => {
   );
 };
 
-// Update Word Form (used inside the Dialog)
+// Update Word Form
 const UpdateWordForm = ({ word, onUpdate }) => {
   const [updatedWord, setUpdatedWord] = useState(word.word);
   const [updatedTranslation, setUpdatedTranslation] = useState(

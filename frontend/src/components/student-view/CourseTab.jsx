@@ -36,7 +36,7 @@ const CoursesTab = () => {
       {courses.map((course) => (
         <Card
           key={course._id}
-          className="cursor-pointer hover:shadow-lg transition-shadow"
+          className="cursor-pointer border-2 border-[#3168ba] hover:shadow-lg transition-shadow"
           onClick={() => handleCourseClick(course._id)}
         >
           <CardHeader>
@@ -50,12 +50,22 @@ const CoursesTab = () => {
               {course.courseLanding.description}
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <p>Videos: {course.numberOfVideos}</p>
-            <p>
-              Status: {course.settings.visibility} | Access:{" "}
-              {course.settings.access}
-            </p>
+          <CardContent className="flex justify-between">
+            <div>
+              <p className="font-semibold text-[#FF4A61]">
+                Videos: {course.numberOfVideos}
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold text-[#FF4A61]">
+                Status: {course.settings.visibility}
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold text-[#FF4A61]">
+                Access: {course.settings.access}
+              </p>
+            </div>
           </CardContent>
         </Card>
       ))}

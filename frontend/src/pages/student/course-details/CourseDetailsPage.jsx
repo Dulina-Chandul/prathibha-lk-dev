@@ -3,15 +3,16 @@ import { useParams } from "react-router-dom";
 import axiosInstance from "@/api/axiosInstance";
 
 const CourseDetailsPage = () => {
-  const { id } = useParams(); // Get the course ID from the URL
+  // Get course ID
+  const { id } = useParams();
   const [course, setCourse] = useState(null);
   const [selectedLesson, setSelectedLesson] = useState(null);
 
   const fetchCourseDetails = async () => {
     try {
-      const response = await axiosInstance.get(`/courses/${id}`); // Fetch course details
+      const response = await axiosInstance.get(`/courses/${id}`);
       setCourse(response.data.data);
-      setSelectedLesson(response.data.data.curriculum[0]); // Select the first lesson by default
+      setSelectedLesson(response.data.data.curriculum[0]);
     } catch (error) {
       console.error("Error fetching course details:", error);
     }
@@ -27,7 +28,6 @@ const CourseDetailsPage = () => {
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar: List of Lessons */}
       <div className="w-1/4 bg-gray-50 p-4 border-r">
         <h2 className="text-xl font-bold mb-4">Lessons</h2>
         <ul>
@@ -45,7 +45,6 @@ const CourseDetailsPage = () => {
         </ul>
       </div>
 
-      {/* Main Content: Selected Lesson Video */}
       <div className="w-3/4 p-8">
         <h1 className="text-3xl font-bold mb-6">
           {course.courseLanding.title}
@@ -53,16 +52,14 @@ const CourseDetailsPage = () => {
         {selectedLesson && (
           <div>
             <h2 className="text-2xl font-bold mb-4">{selectedLesson.title}</h2>
-            {/* Make the iframe container larger */}
             <div className="w-full h-[600px]">
               {" "}
-              {/* Adjust height as needed */}
               <iframe
-                src={selectedLesson.videoLink.replace("watch?v=", "embed/")} // Convert watch URL to embed URL
+                src={selectedLesson.videoLink.replace("watch?v=", "embed/")}
                 title={selectedLesson.title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                className="w-full h-full rounded-lg" // Ensure iframe fills the container
+                className="w-full h-full rounded-lg"
               ></iframe>
             </div>
             <p className="mt-4 text-gray-700">{selectedLesson.description}</p>

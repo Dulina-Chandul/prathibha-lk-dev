@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { addCourse } from "@/services/services";
 
 const AddNewCoursePage = () => {
@@ -34,7 +34,7 @@ const AddNewCoursePage = () => {
     ]);
   };
 
-  console.log(numberOfVideos);
+  // console.log(numberOfVideos);
 
   const handleRemoveLesson = () => {
     if (curriculum.length === 0) return;
@@ -49,7 +49,7 @@ const AddNewCoursePage = () => {
       ...lesson,
     }));
 
-    setNumberOfVideos((prev) => prev + 1);
+    setNumberOfVideos((prev) => prev - 1);
 
     setCurriculum(reindexedCurriculum);
 
@@ -111,6 +111,7 @@ const AddNewCoursePage = () => {
             <CardContent>
               <div className="space-y-4">
                 <Label>Course Image</Label>
+                {/* Set image address */}
                 <Input
                   placeholder="Enter Image URL"
                   type="text"
@@ -121,6 +122,7 @@ const AddNewCoursePage = () => {
                     })
                   }
                 />
+                {/* Set title course*/}
                 <Input
                   type="text"
                   placeholder="Course Title"
@@ -132,6 +134,7 @@ const AddNewCoursePage = () => {
                     })
                   }
                 />
+                {/* Set descriptio on the course */}
                 <Textarea
                   placeholder="Course Description"
                   value={courseLanding.description}
@@ -158,8 +161,9 @@ const AddNewCoursePage = () => {
                 <Label>Visibility</Label>
                 <select
                   value={settings.visibility}
-                  onChange={(e) =>
-                    handleSettingsChange("visibility", e.target.value)
+                  onChange={
+                    (e) => handleSettingsChange("visibility", e.target.value)
+                    // Get the values in options
                   }
                   className="border border-gray-300 rounded-md p-2 w-full"
                 >
@@ -196,6 +200,7 @@ const AddNewCoursePage = () => {
                 className="w-full"
               >
                 <TabsList>
+                  {/* Set the lesson Number */}
                   {curriculum.map((_, index) => (
                     <TabsTrigger key={index} value={`lesson-${index + 1}`}>
                       Lesson {index + 1}
@@ -205,6 +210,7 @@ const AddNewCoursePage = () => {
                     onClick={handleAddVideo}
                     className="ml-2 bg-[#FF4A61] text-white hover:bg-[#e24355] transition-all duration-300"
                   >
+                    {/* Add video to course */}
                     Add Lesson
                   </Button>
                 </TabsList>
@@ -212,6 +218,7 @@ const AddNewCoursePage = () => {
                 {curriculum.map((course, index) => (
                   <TabsContent key={index} value={`lesson-${index + 1}`}>
                     <div className="space-y-4 mt-4">
+                      {/* Video Link */}
                       <Input
                         type="text"
                         placeholder="YouTube Video Link"
@@ -220,6 +227,7 @@ const AddNewCoursePage = () => {
                           handleVideoChange(index, "videoLink", e.target.value)
                         }
                       />
+                      {/* Video Title */}
                       <Input
                         type="text"
                         placeholder="Title"
@@ -228,6 +236,7 @@ const AddNewCoursePage = () => {
                           handleVideoChange(index, "title", e.target.value)
                         }
                       />
+                      {/* Video Description */}
                       <Textarea
                         placeholder="Description"
                         value={course.description}

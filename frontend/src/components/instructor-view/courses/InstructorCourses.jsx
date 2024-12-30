@@ -18,10 +18,10 @@ const InstructorCourses = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log(courses);
+    // console.log(courses);
   }, []);
 
-  // Fetch courses on component mount
+  // Get courses
   useEffect(() => {
     const fetchCoursesData = async () => {
       try {
@@ -31,8 +31,6 @@ const InstructorCourses = () => {
       } catch (error) {
         console.error("Error fetching all courses:", error);
         throw error;
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -41,7 +39,7 @@ const InstructorCourses = () => {
     fetchCoursesData();
   }, [setCourses]);
 
-  console.log(courses);
+  // console.log(courses);
 
   // Handle course deletion
   const handleDeleteCourse = async (id) => {

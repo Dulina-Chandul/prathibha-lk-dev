@@ -8,9 +8,6 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { signInFormControll, signUpFormControll } from "@/config/config";
 import CommonForm from "@/components/form-controller-common/CommonForm";
 import { AuthContext } from "@/context/auth-context/AuthContext";
@@ -56,6 +53,7 @@ const AuthPage = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
+                {/* Sending Sign in form details */}
                 <CommonForm
                   formControlls={signInFormControll}
                   formData={signInFormData}
@@ -79,6 +77,7 @@ const AuthPage = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
+                {/* Sending Sign up form details */}
                 <CommonForm
                   formControlls={signUpFormControll}
                   formData={signUpFormData}

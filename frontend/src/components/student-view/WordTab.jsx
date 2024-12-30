@@ -63,7 +63,6 @@ const RandomWordPage = () => {
         </p>
       )}
 
-      {/* Interactive Button */}
       <button
         onClick={getRandomWord}
         className="mt-6 bg-[#FF4A61] font-bold px-8 py-3 rounded-lg shadow-md hover:border-2 border-[white]  transition-colors box-border"

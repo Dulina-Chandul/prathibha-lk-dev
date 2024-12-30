@@ -6,11 +6,11 @@ import { Textarea } from "../ui/textarea";
 
 const componentMap = {
   Input: Input,
-  Select: SelectField,
   Textarea: Textarea,
 };
 
 const FormControls = ({ formControlls = [], formData, setFormData }) => {
+  // Set the data on
   const handleChange = (e, name) => {
     setFormData({
       ...formData,
@@ -34,6 +34,7 @@ const FormControls = ({ formControlls = [], formData, setFormData }) => {
       required: field.required,
       className: field.className,
       value: formData[field.name] || "",
+      // Set Data
       onChange: (e) => handleChange(e, field.name),
       ...field.props,
     };
@@ -43,6 +44,7 @@ const FormControls = ({ formControlls = [], formData, setFormData }) => {
         <Label htmlFor={field.name} className="text-base">
           {field.label}
         </Label>
+        {/* Select the component Input,Textare etc. */}
         <Component {...commonProps} />
       </div>
     );

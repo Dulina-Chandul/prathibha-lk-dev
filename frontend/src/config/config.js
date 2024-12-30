@@ -1,4 +1,3 @@
-// config.js
 export const signUpFormControll = [
   {
     inline: true,
@@ -81,21 +80,6 @@ export const signUpFormControll = [
       },
     ],
   },
-  //   {
-  //     name: "userType",
-  //     label: "User Type",
-  //     placeholder: "Select user type",
-  //     required: true,
-  //     className: "h-12",
-  //     componentType: "Select",
-  //     props: {
-  //       options: [
-  //         { value: "student", label: "Student" },
-  //         { value: "teacher", label: "Teacher" },
-  //         { value: "admin", label: "Administrator" },
-  //       ],
-  //     },
-  //   },
 ];
 
 export const signInFormControll = [

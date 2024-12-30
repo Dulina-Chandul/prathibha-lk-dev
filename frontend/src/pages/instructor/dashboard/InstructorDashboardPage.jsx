@@ -39,6 +39,7 @@ const InstructorDashboardPage = () => {
     },
   ];
 
+  // Log Out
   const handleLogout = () => {
     resetCredentials();
     sessionStorage.clear();
@@ -62,7 +63,7 @@ const InstructorDashboardPage = () => {
                 className={`w-full justify-start transition-all duration-200 ${
                   activeTab === item.value
                     ? "bg-gradient-to-r from-[#3168ba] to-[#73c3e8] text-white hover:from-[#3168ba]/90 hover:to-[#73c3e8]/90"
-                    : "hover:bg-gradient-to-r hover:from-[#3168ba]/10 hover:to-[#73c3e8]/10"
+                    : null
                 }`}
                 onClick={
                   item.value === "logout"
@@ -70,6 +71,7 @@ const InstructorDashboardPage = () => {
                     : () => setActiveTab(item.value)
                 }
               >
+                {/* Icon and Label */}
                 <item.icon className="mr-3 h-4 w-4" /> {item.label}
               </Button>
             ))}
@@ -80,6 +82,7 @@ const InstructorDashboardPage = () => {
         <div className="max-w-7xl mx-auto">
           <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
             <h1 className="text-3xl font-bold text-[#3168ba]">
+              {/* Set the header */}
               {menuItems.find((item) => item.value === activeTab)?.label}
             </h1>
           </div>
@@ -90,6 +93,7 @@ const InstructorDashboardPage = () => {
                 value={item.value}
                 className="bg-white rounded-xl shadow-sm p-6"
               >
+                {/* Show Individual Components */}
                 {item.component !== null ? item.component : null}
               </TabsContent>
             ))}

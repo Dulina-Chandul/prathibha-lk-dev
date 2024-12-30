@@ -12,7 +12,6 @@ const StudentCommonLayout = () => {
 
   const { auth } = useContext(AuthContext);
 
-  // Check if the current route is a nested route (e.g., /courses/:id)
   const isNestedRoute = location.pathname.includes("/courses/");
 
   return (
@@ -23,10 +22,8 @@ const StudentCommonLayout = () => {
       </h1>
 
       {isNestedRoute ? (
-        // Render the nested route content (e.g., CourseDetailsPage)
         <Outlet />
       ) : (
-        // Render the tabs for the main student view
         <Tabs defaultValue="courses" className="w-full">
           <TabsList className="grid w-full h-14 grid-cols-3">
             <TabsTrigger

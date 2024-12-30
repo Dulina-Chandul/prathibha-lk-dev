@@ -5,8 +5,6 @@ import { InstructorContext } from "@/context/instructor-context/InstructorContex
 
 const InstructorDashboard = () => {
   const { dashboardData } = useContext(InstructorContext);
-  console.log(dashboardData);
-
   const statsData = [
     {
       title: "Total Students",
@@ -34,7 +32,7 @@ const InstructorDashboard = () => {
     },
   ];
 
-  console.log(statsData);
+  // console.log("Dashboard Data : " , statsData);
   return (
     <div className="space-y-6">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -58,6 +56,7 @@ const InstructorDashboard = () => {
         ))}
       </div>
 
+      {/* Add some charts in Admin Dashboard */}
       <div className="grid gap-4 md:grid-cols-2">
         <Card className="col-span-1">
           <CardHeader>

@@ -4,7 +4,6 @@ import { Button } from "../ui/button";
 import FormControls from "./FormControls";
 import Confetti from "react-confetti";
 import toast, { Toaster } from "react-hot-toast";
-import { AuthContext } from "@/context/auth-context/AuthContext";
 
 const CommonForm = ({
   handleSubmit,
@@ -13,10 +12,7 @@ const CommonForm = ({
   formData,
   setFormData,
 }) => {
-  const [signUpButtonClicked, setSignUpButtonClick] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-
-  // const { auth } = useContext(AuthContext);
 
   useEffect(() => {
     if (showConfetti) {
@@ -27,6 +23,7 @@ const CommonForm = ({
     }
   }, [showConfetti]);
 
+  // Confirm Password in Sign Up process
   const checkPassword = () => {
     if (formData.password !== formData.confirmPassword) {
       console.log(formData.password);
@@ -34,54 +31,37 @@ const CommonForm = ({
       toast.error("Password doesn't match. Please try again.", {
         position: "top-right",
       });
-      return false; // Prevent form submission
+      return false;
     }
-    return true; // Allow form submission
+    return true;
   };
-
-  // const checkLoginAuth = () => {
-  //   if (auth.user !== null) {
-  //     toast.success("Login successful!", {
-  //       position: "top-right",
-  //     });
-  //   } else {
-  //     toast.error("Login failed. Please try again.", {
-  //       position: "top-right",
-  //     });
-  //   }
-  // };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
     if (buttonText === "Sign Up") {
       if (!checkPassword()) {
-        return; // Stop if passwords don't match
+        return;
       }
 
       toast.success("Registration successful!", {
         position: "top-right",
       });
-      setShowConfetti(true); // Show Confetti
+      setShowConfetti(true);
     }
 
-    if (buttonText === "Sign In") {
-      // checkLoginAuth();
-    }
-
-    setFormData({}); // Reset form data
-    handleSubmit(e); // Call the provided handleSubmit function
+    setFormData({});
+    handleSubmit(e);
   };
 
   return (
     <>
-      {showConfetti && <Confetti />} {/* Show Confetti if enabled */}
+      {showConfetti && <Confetti />}
       <Toaster
         toastOptions={{
           duration: 8000,
         }}
       />{" "}
-      {/* Toast container */}
       <form onSubmit={handleFormSubmit}>
         <FormControls
           formControlls={formControlls}
