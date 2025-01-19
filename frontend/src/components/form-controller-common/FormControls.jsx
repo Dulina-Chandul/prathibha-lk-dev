@@ -14,7 +14,8 @@ const FormControls = ({ formControlls = [], formData, setFormData }) => {
   const handleChange = (e, name) => {
     setFormData({
       ...formData,
-      [name]: e.target.value,
+      // Remove spaces in input fields
+      [name]: e.target.value.trim(),
     });
   };
 
