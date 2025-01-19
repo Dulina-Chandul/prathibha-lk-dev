@@ -10,7 +10,7 @@ const registerUser = async (req, res) => {
   });
 
   if (existingUser) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       from: "authController.js",
       message: "Username or useremail already exist",

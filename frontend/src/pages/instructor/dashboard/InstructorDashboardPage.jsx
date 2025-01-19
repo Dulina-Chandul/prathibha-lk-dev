@@ -6,11 +6,16 @@ import { Tabs } from "@/components/ui/tabs";
 import { AuthContext } from "@/context/auth-context/AuthContext";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { BarChart, Book, LogOut } from "lucide-react";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 const InstructorDashboardPage = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
-  const { resetCredentials } = useContext(AuthContext);
+  const {
+    resetCredentials,
+    numberOFLoginsInASession,
+    setNumberOFLoginsInASession,
+  } = useContext(AuthContext);
   const menuItems = [
     {
       icon: BarChart,
@@ -44,6 +49,17 @@ const InstructorDashboardPage = () => {
     resetCredentials();
     sessionStorage.clear();
   };
+
+  // Showing Toast effect for loggin
+  useEffect(() => {
+    if (numberOFLoginsInASession === 1) {
+      console.log("Loggin Successfully!");
+      toast.success("Loggin Successfully!", {
+        position: "top-right",
+      });
+      setNumberOFLoginsInASession(0);
+    }
+  }, []);
 
   return (
     <div className="flex h-full min-h-screen bg-gradient-to-br from-[#3168ba]/10 to-[#73c3e8]/10">
@@ -98,6 +114,7 @@ const InstructorDashboardPage = () => {
               </TabsContent>
             ))}
           </Tabs>
+          <Toaster toastOptions={{ duration: 8000 }} />
         </div>
       </main>
     </div>

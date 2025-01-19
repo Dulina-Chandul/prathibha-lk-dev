@@ -15,13 +15,23 @@ export const AuthProvider = ({ children }) => {
     authenticated: false,
     user: null,
   });
+  const [numberOFLoginsInASession, setNumberOFLoginsInASession] = useState(0);
 
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
-    const data = await registerService(signUpFormData);
-    console.log(data);
+    try {
+      const data = await registerService(signUpFormData);
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+      if (error.response && error.response.status === 400) {
+        throw new Error("Username or Email already exist");
+      } else {
+        throw new Error("An error occurred during registration.");
+      }
+    }
   };
-
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
     const data = await loginService(signInFormData);
@@ -35,6 +45,8 @@ export const AuthProvider = ({ children }) => {
         authenticated: true,
         user: data.data.user,
       });
+      // Update the number of logins in a session
+      setNumberOFLoginsInASession((prev) => prev + 1);
     } else {
       setAuth({
         authenticated: false,
@@ -85,6 +97,8 @@ export const AuthProvider = ({ children }) => {
         handleSignInSubmit,
         auth,
         resetCredentials,
+        numberOFLoginsInASession,
+        setNumberOFLoginsInASession,
       }}
     >
       {children}

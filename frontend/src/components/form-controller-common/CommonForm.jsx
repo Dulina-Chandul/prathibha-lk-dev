@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import FormControls from "./FormControls";
 import Confetti from "react-confetti";
 import toast, { Toaster } from "react-hot-toast";
+import { AuthContext } from "@/context/auth-context/AuthContext";
 
 const CommonForm = ({
   handleSubmit,
@@ -14,6 +15,8 @@ const CommonForm = ({
 }) => {
   const [showConfetti, setShowConfetti] = useState(false);
 
+  const { auth } = useContext(AuthContext);
+
   useEffect(() => {
     if (showConfetti) {
       const timer = setTimeout(() => {
@@ -23,11 +26,8 @@ const CommonForm = ({
     }
   }, [showConfetti]);
 
-  // Confirm Password in Sign Up process
   const checkPassword = () => {
     if (formData.password !== formData.confirmPassword) {
-      console.log(formData.password);
-      console.log(formData.confirmPassword);
       toast.error("Password doesn't match. Please try again.", {
         position: "top-right",
       });
@@ -36,22 +36,38 @@ const CommonForm = ({
     return true;
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     if (buttonText === "Sign Up") {
       if (!checkPassword()) {
         return;
       }
+    }
 
-      toast.success("Registration successful!", {
+    try {
+      const result = await handleSubmit(e);
+
+      if (buttonText === "Sign Up") {
+        if (result.success) {
+          toast.success("Registration successful!", {
+            position: "top-right",
+          });
+          setShowConfetti(true);
+        } else {
+          toast.error(result.message || "Username or Email already exist", {
+            position: "top-right",
+          });
+        }
+      }
+    } catch (error) {
+      // Send Error Code
+      toast.error(error.message || "An error occurred during registration.", {
         position: "top-right",
       });
-      setShowConfetti(true);
     }
 
     setFormData({});
-    handleSubmit(e);
   };
 
   return (
@@ -61,7 +77,7 @@ const CommonForm = ({
         toastOptions={{
           duration: 8000,
         }}
-      />{" "}
+      />
       <form onSubmit={handleFormSubmit}>
         <FormControls
           formControlls={formControlls}
@@ -70,7 +86,7 @@ const CommonForm = ({
         />
         <Button
           type="submit"
-          className="w-full h-12 text-lg bg-[#FF4A61] hover:bg-[#ff3349] mt-6"
+          className="w-full h-12 text-lg bg-gradient-to-r transition-colors duration-5000 ease-in-out from-[#a21caf] to-[#d946ef] mt-6 hover:bg-gradient-to-r hover:from-[#d946ef] hover:to-[#a21caf] hover:text-white"
         >
           {buttonText}
         </Button>

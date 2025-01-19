@@ -9,9 +9,12 @@ import AddNewCoursePage from "./pages/instructor/add-course/AddNewCoursePage";
 import CourseDetailsPage from "./pages/student/course-details/CourseDetailsPage";
 
 function App() {
-  const { auth } = useContext(AuthContext);
+  const { auth, setNumberOFLoginsInASession, numberOFLoginsInASession } =
+    useContext(AuthContext);
 
   console.log("User : ", auth.user);
+
+  // console.log("Number of logins in a session: ", numberOFLoginsInASession);
 
   return (
     <div>
