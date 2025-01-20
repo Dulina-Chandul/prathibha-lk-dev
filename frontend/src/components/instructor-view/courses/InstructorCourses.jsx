@@ -62,7 +62,7 @@ const InstructorCourses = () => {
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Your Courses</h1>
           <Link to="/instructor/create-new">
-            <Button className="bg-gradient-to-r from-[#3168ba] to-[#73c3e8] hover:from-[#FF4A61] hover:to-[#FF4A61]">
+            <Button className="bg-[#a21caf] text-white font-bold py-2 px-4 rounded-lg hover:bg-[#86198f] transition duration-300 ease-in-out">
               Add New Course
             </Button>
           </Link>
@@ -79,7 +79,7 @@ const InstructorCourses = () => {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Your Courses</h1>
         <Link to="/instructor/create-new">
-          <Button className="bg-gradient-to-r from-[#3168ba] to-[#73c3e8] hover:from-[#FF4A61] hover:to-[#FF4A61]">
+          <Button className="bg-[#a21caf] text-white font-bold py-2 px-4 rounded-lg hover:bg-[#86198f] transition duration-300 ease-in-out">
             Add New Course
           </Button>
         </Link>
@@ -93,11 +93,11 @@ const InstructorCourses = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Videos</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead className="w-2/5 font-bold">Title</TableHead>
+                <TableHead className="w-2/5 font-bold">Description</TableHead>
+                <TableHead className="w-1/8 font-bold">Videos</TableHead>
+                <TableHead className="w-1/8 font-bold">Status</TableHead>
+                <TableHead className="w-1/6 font-bold">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -110,22 +110,40 @@ const InstructorCourses = () => {
                 ) {
                   return (
                     <TableRow key={courseDetails._id}>
-                      <TableCell>{courseDetails.courseLanding.title}</TableCell>
                       <TableCell>
-                        {courseDetails.courseLanding.description}
+                        <p className="font-semibold">
+                          {courseDetails.courseLanding.title}
+                        </p>
                       </TableCell>
-                      <TableCell>{courseDetails.numberOfVideos}</TableCell>
-                      <TableCell>{courseDetails.settings.visibility}</TableCell>
                       <TableCell>
-                        <Button variant="outline" className="mr-2">
-                          Edit
-                        </Button>
-                        <Button
-                          variant="destructive"
-                          onClick={() => handleDeleteCourse(courseDetails._id)}
-                        >
-                          Delete
-                        </Button>
+                        <p className="font-semibold">
+                          {courseDetails.courseLanding.description}
+                        </p>
+                      </TableCell>
+                      <TableCell>
+                        <p className="font-semibold">
+                          {courseDetails.numberOfVideos}
+                        </p>
+                      </TableCell>
+                      <TableCell>
+                        <p className="font-semibold">
+                          {courseDetails.settings.visibility}
+                        </p>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex flex-row space-x-1">
+                          <Button variant="outline" className="mr-2">
+                            Edit
+                          </Button>
+                          <Button
+                            variant="destructive"
+                            onClick={() =>
+                              handleDeleteCourse(courseDetails._id)
+                            }
+                          >
+                            Delete
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   );

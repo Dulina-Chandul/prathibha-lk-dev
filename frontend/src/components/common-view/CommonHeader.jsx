@@ -12,7 +12,6 @@ const CommonHeader = () => {
               <h1 className="h-9 w-auto text-[2rem] text-[#14b8a6] font-bold">
                 rathibha <span className="text-[#d946ef]">learn</span>
               </h1>
-              <p className="sr-only">Prathibha learn</p>
             </Link>
           </div>
           <div className="hidden md:flex md:items-center md:justify-center md:gap-5">

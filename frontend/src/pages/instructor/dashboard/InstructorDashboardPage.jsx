@@ -4,10 +4,13 @@ import WordExplorer from "@/components/instructor-view/word-explorer/WordExplore
 import { Button } from "@/components/ui/button";
 import { Tabs } from "@/components/ui/tabs";
 import { AuthContext } from "@/context/auth-context/AuthContext";
+import { InstructorContext } from "@/context/instructor-context/InstructorContext";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { BarChart, Book, LogOut } from "lucide-react";
 import React, { useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { Link } from "react-router-dom";
+import { PulseLoader } from "react-spinners";
 
 const InstructorDashboardPage = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -16,6 +19,7 @@ const InstructorDashboardPage = () => {
     numberOFLoginsInASession,
     setNumberOFLoginsInASession,
   } = useContext(AuthContext);
+
   const menuItems = [
     {
       icon: BarChart,
@@ -61,15 +65,38 @@ const InstructorDashboardPage = () => {
     }
   }, []);
 
+  const { loading } = useContext(InstructorContext);
+
+  useEffect(() => {
+    console.log("Loading state updated:", loading);
+  }, [loading]);
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+        <div className="text-center">
+          <PulseLoader color="#a21caf" size={15} />
+          <p className="mt-4 text-white">Loading dashboard data...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-full min-h-screen bg-gradient-to-br from-[#3168ba]/10 to-[#73c3e8]/10">
       <aside className="w-64 bg-white shadow-lg hidden md:block border-r">
         <div className="p-6 h-full bg-gradient-to-b from-[#3168ba]/5 to-[#73c3e8]/5">
           <div className="mb-8">
-            <h2 className="text-xl font-extrabold text-[#3168ba]">
-              Prathibha Learn
-            </h2>
-            <p className="text-sm text-gray-500">Instructor Portal</p>
+            <Link className="flex items-center" to="/home">
+              <h1 className="h-15 text-[#14b8a6] text-2xl font-bold">P</h1>
+              <h1 className="h-9 w-auto text-2xl text-[#14b8a6] font-bold">
+                rathibha <span className="text-[#d946ef]">learn</span>
+              </h1>
+              <p className="sr-only">Prathibha learn</p>
+            </Link>
+            <p className="text-sm font-semibold text-gray-500">
+              Admin Dashboard
+            </p>
           </div>
           <nav className="space-y-3">
             {menuItems.map((item) => (
@@ -78,7 +105,7 @@ const InstructorDashboardPage = () => {
                 variant={activeTab === item.value ? "secondary" : "ghost"}
                 className={`w-full justify-start transition-all duration-200 ${
                   activeTab === item.value
-                    ? "bg-gradient-to-r from-[#3168ba] to-[#73c3e8] text-white hover:from-[#3168ba]/90 hover:to-[#73c3e8]/90"
+                    ? "bg-gradient-to-r from-[#a21caf] to-[#d946ef] text-white hover:from-[#a21caf]/90 hover:to-[#d946ef]/90"
                     : null
                 }`}
                 onClick={
@@ -97,8 +124,7 @@ const InstructorDashboardPage = () => {
       <main className="flex-1 p-8 overflow-y-auto">
         <div className="max-w-7xl mx-auto">
           <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
-            <h1 className="text-3xl font-bold text-[#3168ba]">
-              {/* Set the header */}
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-[#a21caf] to-[#d946ef] bg-clip-text text-transparent">
               {menuItems.find((item) => item.value === activeTab)?.label}
             </h1>
           </div>

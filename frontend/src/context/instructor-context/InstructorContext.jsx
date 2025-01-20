@@ -21,21 +21,22 @@ export const InstructorProvider = ({ children }) => {
     totalWords: 0,
   });
 
-  // Fetch courses
+  // Fetch all the courses and course count
   const loadCourses = async () => {
     try {
-      // Get all courses fromDatabase
       const data = await fetchCourses();
+      console.log("Loading state updated:", loading);
       console.log("This log is from InstructorProvider loadCourses : ", data);
       setCourses(data.data);
 
-      // Set course count
       setDashboardData((prevData) => ({
         ...prevData,
         totalCourses: data.data.length,
       }));
     } catch (error) {
       console.error("Error fetching courses:", error);
+    } finally {
+      // setTimeout(() => setLoading(false), 1000);
     }
   };
 
@@ -115,9 +116,19 @@ export const InstructorProvider = ({ children }) => {
 
   // Fetch courses and user count on component mount
   useEffect(() => {
-    loadCourses();
-    getUserCount();
-    getWordCount();
+    const fetchData = async () => {
+      try {
+        await loadCourses();
+        await getUserCount();
+        await getWordCount();
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -126,12 +137,12 @@ export const InstructorProvider = ({ children }) => {
         courses,
         setCourses,
         loading,
-        setLoading,
         handleAddCourse,
         handleUpdateCourse,
         handleDeleteCourse,
         dashboardData,
         setDashboardData,
+        loadCourses,
       }}
     >
       {children}

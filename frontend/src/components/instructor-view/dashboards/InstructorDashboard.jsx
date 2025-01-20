@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Book, Users, Activity, Book as BookIcon } from "lucide-react";
 import { InstructorContext } from "@/context/instructor-context/InstructorContext";
+import { PulseLoader } from "react-spinners";
 
 const InstructorDashboard = () => {
   const { dashboardData } = useContext(InstructorContext);
+
   const statsData = [
     {
       title: "Total Students",
@@ -25,10 +27,10 @@ const InstructorDashboard = () => {
       description: "Last 24 hours",
     },
     {
-      title: "Word Mastery",
+      title: "Word Bank",
       value: dashboardData.totalWords,
       icon: BookIcon,
-      description: "Words per day",
+      description: "Words count",
     },
   ];
 
@@ -45,7 +47,7 @@ const InstructorDashboard = () => {
               <stat.icon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold from-[#3168ba] to-[#73c3e8] bg-gradient-to-r bg-clip-text text-transparent">
+              <div className="text-2xl font-bold bg-gradient-to-r from-[#a21caf] to-[#d946ef] bg-clip-text text-transparent">
                 {stat.value}
               </div>
               <p className="text-xs text-muted-foreground">
