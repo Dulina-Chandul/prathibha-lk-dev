@@ -60,9 +60,9 @@ const getAllCourses = async (req, res) => {
 // Update a course
 const updateCourse = async (req, res) => {
   const { id } = req.params;
-  const { curriculum, courseLanding, settings } = req.body;
+  const { curriculum, courseLanding, settings, numberOfVideos } = req.body;
 
-  // Validate course ID
+  // Validating the course ID
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({
       success: false,
@@ -73,7 +73,7 @@ const updateCourse = async (req, res) => {
   try {
     const updatedCourse = await Course.findByIdAndUpdate(
       id,
-      { curriculum, courseLanding, settings },
+      { curriculum, courseLanding, settings, numberOfVideos },
       { new: true }
     );
 
@@ -134,6 +134,7 @@ const deleteCourse = async (req, res) => {
   }
 };
 
+// Get courses by ID
 export const getCourseById = async (req, res) => {
   const { id } = req.params;
   try {

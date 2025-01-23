@@ -23,6 +23,8 @@ import {
   updateWordService,
   deleteWordService,
 } from "@/services/services";
+import { Pencil, Plus, Trash } from "lucide-react";
+import toast, { Toaster } from "react-hot-toast";
 
 const WordExplorer = () => {
   const [words, setWords] = useState([]);
@@ -71,8 +73,13 @@ const WordExplorer = () => {
     try {
       const data = await updateWordService(id, updatedWord);
       setWords(words.map((word) => (word._id === id ? data : word)));
+      console.log("Words updated successfully :", data);
+      toast.success("Word updated successfully", {
+        position: "top-right",
+      });
     } catch (error) {
       console.error("Error updating word:", error);
+    } finally {
     }
   };
 
@@ -81,8 +88,14 @@ const WordExplorer = () => {
     try {
       await deleteWordService(id);
       setWords(words.filter((word) => word._id !== id));
+      toast.success("Word deleted successfully", {
+        position: "top-right",
+      });
     } catch (error) {
       console.error("Error deleting word:", error);
+      toast.error("Failed to delete word", {
+        position: "top-right",
+      });
     }
   };
 
@@ -91,22 +104,24 @@ const WordExplorer = () => {
       {/* Add a New Word Form */}
       <Card>
         <CardHeader>
-          <CardTitle>Add a New Word</CardTitle>
+          <CardTitle className="text-xl">Add a New Word</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleAddWord} className="space-y-4">
             <Input
               type="text"
-              placeholder="Word"
+              placeholder="Enter an english word"
               value={word}
               onChange={(e) => setWord(e.target.value)}
+              className="p-6 placeholder:text-lg"
               required
             />
             <Input
               type="text"
-              placeholder="Translation"
+              placeholder="Enter the sinhala translation"
               value={translation}
               onChange={(e) => setTranslation(e.target.value)}
+              className="p-6 placeholder:text-lg"
               required
             />
             <Input
@@ -114,8 +129,15 @@ const WordExplorer = () => {
               placeholder="Examples (comma-separated)"
               value={examples}
               onChange={(e) => setExamples(e.target.value)}
+              className="p-6 placeholder:text-lg"
             />
-            <Button type="submit">Add Word</Button>
+            <Button
+              type="submit"
+              className="bg-[#a21caf] text-white font-bold  rounded-lg hover:bg-[#86198f] transition duration-300 ease-in-out py-6 px-6"
+            >
+              <Plus className="ml-1" size={20} />
+              Add Word
+            </Button>
           </form>
         </CardContent>
       </Card>
@@ -124,10 +146,10 @@ const WordExplorer = () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Word</TableHead>
-            <TableHead>Translation</TableHead>
-            <TableHead>Examples</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead className="font-bold text-sm">Word</TableHead>
+            <TableHead className="font-bold text-sm">Translation</TableHead>
+            <TableHead className="font-bold text-sm">Examples</TableHead>
+            <TableHead className="font-bold text-sm">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -136,15 +158,23 @@ const WordExplorer = () => {
               <TableCell>{word.word}</TableCell>
               <TableCell>{word.translation}</TableCell>
               <TableCell>{word.examples.join(", ")}</TableCell>
-              <TableCell className="space-x-2">
+              <TableCell className="space-x-2 flex flex-row">
                 {/* Update Word Dialog */}
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button>Update</Button>
+                    <Button
+                      variant="outline"
+                      className="bg-blue-500 text-white hover:bg-blue-600 hover:text-white "
+                    >
+                      <Pencil className="mr-1" size={18} />
+                      Edit
+                    </Button>
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
-                      <DialogTitle>Update Word</DialogTitle>
+                      <DialogTitle className="text-2xl">
+                        Update Word
+                      </DialogTitle>
                     </DialogHeader>
                     <UpdateWordForm
                       word={word}
@@ -157,7 +187,9 @@ const WordExplorer = () => {
                 <Button
                   variant="destructive"
                   onClick={() => handleDeleteWord(word._id)}
+                  className="bg-red-500 text-white hover:bg-red-600 hover:text-white"
                 >
+                  <Trash className="mr-1" size={18} />
                   Delete
                 </Button>
               </TableCell>
@@ -165,6 +197,7 @@ const WordExplorer = () => {
           ))}
         </TableBody>
       </Table>
+      {/* <Toaster toastOptions={{ duration: 8000 }} /> */}
     </div>
   );
 };
@@ -179,7 +212,8 @@ const UpdateWordForm = ({ word, onUpdate }) => {
     word.examples.join(",")
   );
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     onUpdate({
       word: updatedWord,
       translation: updatedTranslation,
@@ -188,27 +222,35 @@ const UpdateWordForm = ({ word, onUpdate }) => {
   };
 
   return (
-    <div className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <Input
         type="text"
         placeholder="Word"
         value={updatedWord}
+        className=" focus:border-purple-600  "
         onChange={(e) => setUpdatedWord(e.target.value)}
       />
       <Input
         type="text"
         placeholder="Translation"
         value={updatedTranslation}
+        className=" focus:border-purple-600"
         onChange={(e) => setUpdatedTranslation(e.target.value)}
       />
       <Input
         type="text"
         placeholder="Examples (comma-separated)"
         value={updatedExamples}
+        className=" focus:border-purple-600"
         onChange={(e) => setUpdatedExamples(e.target.value)}
       />
-      <Button onClick={handleSubmit}>Save Changes</Button>
-    </div>
+      <Button
+        type="submit"
+        className="bg-[#a21caf] text-white font-bold  rounded-lg hover:bg-[#86198f] transition duration-300 ease-in-out"
+      >
+        Save Changes
+      </Button>
+    </form>
   );
 };
 

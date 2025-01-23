@@ -53,7 +53,7 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen w-screen overflow-x-hidden">
+    <div className="flex flex-col min-h-screen overflow-x-hidden">
       <CommonHeader />
       <main className="flex flex-row items-center justify-center min-h-screen bg-gray-50 bg-gradient-to-r from-[#a21caf] to-[#d946ef] mt-20">
         {getLeftSideContent()}

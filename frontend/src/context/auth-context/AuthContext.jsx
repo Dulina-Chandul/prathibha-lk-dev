@@ -58,18 +58,22 @@ export const AuthProvider = ({ children }) => {
   // Check Auth User
 
   const checkAuthUser = async () => {
-    const data = await checkAuthService();
+    try {
+      const data = await checkAuthService();
 
-    if (data.success) {
-      setAuth({
-        authenticated: true,
-        user: data.data.user,
-      });
-    } else {
-      setAuth({
-        authenticated: false,
-        user: null,
-      });
+      if (data.success) {
+        setAuth({
+          authenticated: true,
+          user: data.data.user,
+        });
+      } else {
+        setAuth({
+          authenticated: false,
+          user: null,
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

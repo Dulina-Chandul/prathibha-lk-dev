@@ -143,6 +143,8 @@ export const InstructorProvider = ({ children }) => {
         dashboardData,
         setDashboardData,
         loadCourses,
+        getUserCount,
+        getWordCount,
       }}
     >
       {children}

@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
-import { addCourse } from "@/services/services";
-import { Link, useAsyncError, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { addCourse, updateCourse } from "@/services/services";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
+import axiosInstance from "@/api/axiosInstance";
 
 const AddNewCoursePage = () => {
   const [curriculum, setCurriculum] = useState([]);
@@ -28,6 +29,27 @@ const AddNewCoursePage = () => {
 
   const [activeMainTab, setActiveMainTab] = useState("curriculum");
   const [activeLessonTab, setActiveLessonTab] = useState("lesson-1");
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetchCourseDetails();
+  }, []);
+
+  const fetchCourseDetails = async () => {
+    try {
+      const response = await axiosInstance.put(`/courses/${id}`);
+      console.log(response);
+
+      setCurriculum(response.data.data.curriculum);
+      setCourseLanding(response.data.data.courseLanding);
+      setSettings(response.data.data.settings);
+      setNumberOfVideos(response.data.data.numberOfVideos);
+      console.log(numberOfVideos);
+    } catch (error) {
+      console.error("Error fetching course details:", error);
+    }
+  };
 
   // Handle Add videos to the course
   const handleAddVideo = () => {
@@ -89,9 +111,9 @@ const AddNewCoursePage = () => {
     };
 
     try {
-      const response = await addCourse(courseData);
-      console.log("Course created successfully:", response.data);
-      toast.success("Course created successfully!", {
+      const response = await updateCourse(id, courseData);
+      console.log("Course Updated successfully:", response.data);
+      toast.success("Course Updated successfully!", {
         position: "top-right",
       });
       navigate("/instructor");
@@ -128,7 +150,7 @@ const AddNewCoursePage = () => {
               <Link to="/instructor">
                 <button className="bg-[#a21caf] text-white font-bold py-2 px-4 rounded-lg hover:bg-[#86198f] transition duration-300 ease-in-out flex items-center">
                   <ArrowLeft className="mr-2" size={20} />
-                  Back to Dashboard
+                  Back to Dashboards
                 </button>
               </Link>
             </div>

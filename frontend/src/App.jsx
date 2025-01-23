@@ -7,6 +7,7 @@ import InstructorDashboardPage from "./pages/instructor/dashboard/InstructorDash
 import StudentHome from "./pages/student/home/StudentHome";
 import AddNewCoursePage from "./pages/instructor/add-course/AddNewCoursePage";
 import CourseDetailsPage from "./pages/student/course-details/CourseDetailsPage";
+import UpdateCoursePage from "./pages/instructor/update-coure-page/UpdateCoursePage";
 
 function App() {
   const { auth, setNumberOFLoginsInASession, numberOFLoginsInASession } =
@@ -29,6 +30,9 @@ function App() {
             />
           }
         />
+
+        {/* Instructor routes */}
+        {/*  Dashboard */}
         <Route
           path="/instructor"
           element={
@@ -39,6 +43,7 @@ function App() {
             />
           }
         />
+        {/* Create new course */}
         <Route
           path="/instructor/create-new"
           element={
@@ -49,6 +54,18 @@ function App() {
             />
           }
         />
+        {/* Update course */}
+        <Route
+          path="/instructor/update/:id"
+          element={
+            <RouteGuard
+              element={<UpdateCoursePage />}
+              authenticated={auth.authenticated}
+              user={auth.user}
+            />
+          }
+        />
+
         <Route
           path="/"
           element={

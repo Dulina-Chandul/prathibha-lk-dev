@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/table";
 import { fetchCourses, deleteCourse } from "@/services/services";
 import { InstructorContext } from "@/context/instructor-context/InstructorContext";
+import { Pencil, Plus, Trash } from "lucide-react";
+import toast from "react-hot-toast";
 
 const InstructorCourses = () => {
   const { courses, setCourses } = useContext(InstructorContext);
@@ -48,11 +50,17 @@ const InstructorCourses = () => {
       setCourses((prevCourses) =>
         prevCourses.filter((course) => course._id !== id)
       );
+      toast.success("Course deleted successfully!", {
+        position: "top-right",
+      });
     } catch (error) {
       console.error(
         "Failed to delete course:",
         error.response?.data || error.message
       );
+      toast.error("Failed to delete course!", {
+        position: "top-right",
+      });
     }
   };
 
@@ -62,7 +70,8 @@ const InstructorCourses = () => {
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Your Courses</h1>
           <Link to="/instructor/create-new">
-            <Button className="bg-[#a21caf] text-white font-bold py-2 px-4 rounded-lg hover:bg-[#86198f] transition duration-300 ease-in-out">
+            <Button className="bg-[#a21caf] text-white font-bold py-4 px-4 rounded-lg hover:bg-[#86198f] transition duration-300 ease-in-out">
+              <Plus className="ml-1" size={20} />
               Add New Course
             </Button>
           </Link>
@@ -79,7 +88,8 @@ const InstructorCourses = () => {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Your Courses</h1>
         <Link to="/instructor/create-new">
-          <Button className="bg-[#a21caf] text-white font-bold py-2 px-4 rounded-lg hover:bg-[#86198f] transition duration-300 ease-in-out">
+          <Button className="bg-[#a21caf] text-white font-bold py-6 px-6 rounded-lg hover:bg-[#86198f] transition duration-300 ease-in-out">
+            <Plus className="ml-1" size={20} />
             Add New Course
           </Button>
         </Link>
@@ -87,7 +97,7 @@ const InstructorCourses = () => {
 
       <Card>
         <CardHeader>
-          <CardTitle>Course List</CardTitle>
+          <CardTitle className="text-xl">Course List</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
@@ -132,15 +142,23 @@ const InstructorCourses = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex flex-row space-x-1">
-                          <Button variant="outline" className="mr-2">
-                            Edit
-                          </Button>
+                          <Link to={`/instructor/update/${courseDetails._id}`}>
+                            <Button
+                              variant="outline"
+                              className="bg-blue-500 text-white hover:bg-blue-600 hover:text-white"
+                            >
+                              <Pencil className="mr-1" size={18} />
+                              Edit
+                            </Button>
+                          </Link>
                           <Button
                             variant="destructive"
                             onClick={() =>
                               handleDeleteCourse(courseDetails._id)
                             }
+                            className="bg-red-500 text-white hover:bg-red-600 hover:text-white"
                           >
+                            <Trash className="mr-1" size={18} />
                             Delete
                           </Button>
                         </div>

@@ -18,7 +18,7 @@ const StudentCommonLayout = () => {
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-[#3168ba] to-[#73c3e8] animate-fade-in">
         Welcome to the Pathibha LK
-        <span className="text-[#FF4A61]"> {auth?.user?.userName} </span>
+        <span className="text-[#8f3b46]"> {auth?.user?.userName} </span>
       </h1>
 
       {isNestedRoute ? (

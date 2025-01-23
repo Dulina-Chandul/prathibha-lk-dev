@@ -54,6 +54,9 @@ const InstructorDashboardPage = () => {
     sessionStorage.clear();
   };
 
+  const { loading, loadCourses, getUserCount, getWordCount } =
+    useContext(InstructorContext);
+
   // Showing Toast effect for loggin
   useEffect(() => {
     if (numberOFLoginsInASession === 1) {
@@ -63,9 +66,10 @@ const InstructorDashboardPage = () => {
       });
       setNumberOFLoginsInASession(0);
     }
+    loadCourses();
+    getUserCount();
+    getWordCount();
   }, []);
-
-  const { loading } = useContext(InstructorContext);
 
   useEffect(() => {
     console.log("Loading state updated:", loading);
@@ -114,7 +118,6 @@ const InstructorDashboardPage = () => {
                     : () => setActiveTab(item.value)
                 }
               >
-                {/* Icon and Label */}
                 <item.icon className="mr-3 h-4 w-4" /> {item.label}
               </Button>
             ))}

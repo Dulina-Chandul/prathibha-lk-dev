@@ -14,7 +14,7 @@ const router = express.Router();
 router.post("/create-new", authenticate, createCourse);
 
 // Get all courses
-router.get("/all", authenticate, getAllCourses);
+router.get("/all", getAllCourses);
 
 // Update a course
 router.put("/:id", authenticate, updateCourse);

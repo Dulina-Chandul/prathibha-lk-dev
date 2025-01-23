@@ -44,7 +44,6 @@ const CommonForm = ({
         return;
       }
     }
-
     try {
       const result = await handleSubmit(e);
 
