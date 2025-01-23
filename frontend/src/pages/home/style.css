@@ -1,0 +1,72 @@
+.container {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*     Statistics     */
+/**********************/
+.counter {
+  padding-top: 2rem;
+  padding-bottom: 4.5rem;
+  text-align: center;
+}
+
+.counter #counter {
+  margin-bottom: 0.75rem;
+}
+
+.counter #counter .cell {
+  display: inline-block;
+  width: 120px;
+  margin-right: 1.75rem;
+  margin-bottom: 3.5rem;
+  margin-left: 1.75rem;
+  vertical-align: top;
+}
+
+.counter #counter .counter-value {
+  color: #14b8a6;
+  font-weight: 700;
+  font-size: 3.25rem;
+  line-height: 3.75rem;
+  vertical-align: middle;
+}
+
+.counter #counter .counter-info {
+  margin-bottom: 0;
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+/* home page animation */
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    scale: 0.5;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.banner {
+  animation: appear 3s linear;
+}
+
+.title {
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+}
+
+.component {
+  animation: appear 3s linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+}
+
+.contact_banner {
+  animation: appear 2s linear;
+}

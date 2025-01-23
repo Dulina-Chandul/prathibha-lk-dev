@@ -1,17 +1,24 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { PulseLoader } from "react-spinners";
 
 const DailyJournalTab = () => {
   const [journalEntry, setJournalEntry] = useState("");
   const [aiResponse, setAiResponse] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleAnalyzeEntry = async () => {
     if (!journalEntry.trim()) {
-      alert("Please enter a journal entry.");
+      // alert("Please enter a journal entry.");
+      toast.error("Please enter a journal entry.", {
+        position: "top-right",
+      });
       return;
     }
 
     try {
+      setLoading(true);
       const apiKey = "AIzaSyCBSUNND-dklEFVBvKZXVhGlOQGQxBP41k";
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({
@@ -40,8 +47,18 @@ const DailyJournalTab = () => {
     } catch (error) {
       console.error("Error analyzing entry:", error);
       alert("An error occurred while analyzing the entry. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
+
+  // if (loading) {
+  //   return (
+  //     <div className="flex items-center justify-center h-screen">
+  //       <PulseLoader color="#36d7b7" />
+  //     </div>
+  //   );
+  // }
 
   const parseAIResponse = () => {
     const corrections = aiResponse.match(
@@ -67,7 +84,7 @@ const DailyJournalTab = () => {
         value={journalEntry}
         onChange={(e) => setJournalEntry(e.target.value)}
         placeholder="Enter your journal entry here..."
-        className="w-full h-32 p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
+        className="w-full h-64   p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
       />
       <button
         onClick={handleAnalyzeEntry}
@@ -75,6 +92,13 @@ const DailyJournalTab = () => {
       >
         Analyze
       </button>
+
+      {loading && (
+        <div className="mt-4 flex items-center justify-center">
+          <PulseLoader color="#a21caf" size={15} />
+          <p className="text-gray-600">Analyzing your journal entry...</p>
+        </div>
+      )}
 
       {aiResponse && (
         <div className="mt-8">

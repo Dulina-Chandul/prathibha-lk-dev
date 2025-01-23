@@ -7,6 +7,7 @@ const StudentHome = () => {
   return (
     <div>
       <Header />
+      <div className="mt-20"></div>
       <StudentCommonLayout />
     </div>
   );

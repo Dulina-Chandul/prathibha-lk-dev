@@ -7,7 +7,7 @@ const CommonHeader = () => {
       <div className="px-12">
         <div className="flex items-center justify-between">
           <div className="flex shrink-0">
-            <Link aria-current="page" className="flex items-center" to="/home">
+            <Link aria-current="page" className="flex items-center" to="/">
               <h1 className="h-15 text-[#14b8a6] text-[3rem] font-bold">P</h1>
               <h1 className="h-9 w-auto text-[2rem] text-[#14b8a6] font-bold">
                 rathibha <span className="text-[#d946ef]">learn</span>

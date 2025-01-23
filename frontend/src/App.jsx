@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Router, Routes } from "react-router-dom";
 import AuthPage from "./pages/auth/AuthPage";
 import RouteGuard from "./components/route-guard/RouteGuard";
 import { useContext } from "react";
@@ -8,6 +8,8 @@ import StudentHome from "./pages/student/home/StudentHome";
 import AddNewCoursePage from "./pages/instructor/add-course/AddNewCoursePage";
 import CourseDetailsPage from "./pages/student/course-details/CourseDetailsPage";
 import UpdateCoursePage from "./pages/instructor/update-coure-page/UpdateCoursePage";
+import Home from "./pages/home/Home";
+import Contact from "./pages/contact/Contact";
 
 function App() {
   const { auth, setNumberOFLoginsInASession, numberOFLoginsInASession } =
@@ -20,6 +22,9 @@ function App() {
   return (
     <div>
       <Routes>
+        {/* <Route path="/homepage" element={<Home />} /> */}
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/auth"
           element={
@@ -66,16 +71,6 @@ function App() {
           }
         />
 
-        <Route
-          path="/"
-          element={
-            <RouteGuard
-              element={<StudentHome />}
-              authenticated={auth.authenticated}
-              user={auth.user}
-            />
-          }
-        />
         <Route
           path="/home"
           element={

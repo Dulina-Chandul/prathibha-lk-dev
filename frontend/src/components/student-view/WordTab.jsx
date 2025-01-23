@@ -28,14 +28,14 @@ const RandomWordPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-[#3168ba] to-[#73c3e8] text-white rounded-2xl">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-[#a21caf] to-[#d946ef] text-white rounded-2xl">
       <h1 className="text-4xl font-bold mb-8 animate-fade-in">
         Random Word Explorer
       </h1>
 
       {randomWord ? (
         <div className="min-h-[10rem]   bg-white text-primary-foreground p-14 rounded-xl shadow-lg w-4/5 sm:w-1/2 text-center">
-          <h2 className="text-3xl font-semibold mb-2 ">
+          <h2 className="text-3xl font-semibold mb-2">
             <span className="font-bold text-5xl text-[#FF4A61]">Word :</span> :{" "}
             <span className="text-5xl font-bold text-[#FF4A61]">
               {randomWord.word}
@@ -65,7 +65,7 @@ const RandomWordPage = () => {
 
       <button
         onClick={getRandomWord}
-        className="mt-6 bg-[#FF4A61] font-bold px-8 py-3 rounded-lg shadow-md hover:border-2 border-[white]  transition-colors box-border"
+        className="mt-6 bg-[#dad8d8] font-bold px-8 py-3 rounded-lg shadow-md hover:border-2 border-[white] text-black  transition-colors box-border"
       >
         Next Word
       </button>
